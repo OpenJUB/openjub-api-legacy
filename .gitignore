@@ -14,5 +14,8 @@ results
 npm-debug.log
 node_modules
 
-open-jub-api-server.sublime-workspace
+openjub-api.sublime-workspace
 .DS_Store
+
+settings.json
+/docs
