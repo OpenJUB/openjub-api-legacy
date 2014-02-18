@@ -1,5 +1,5 @@
 {
-  "name": "open-jub-api-server",
+  "name": "openjub-api",
   "version": "0.0.1",
   "description": "A server to provide the OpenJUB API",
   "main": "server.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/OpenJUB/api-server.git"
+    "url": "git://github.com/OpenJUB/openjub-api.git"
   },
   "keywords": [
     "Jacobs",
@@ -18,7 +18,7 @@
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OpenJUB/api-server/issues"
+    "url": "https://github.com/OpenJUB/openjub-api/issues"
   },
-  "homepage": "https://github.com/OpenJUB/api-server"
+  "homepage": "https://github.com/OpenJUB/openjub-api"
 }
