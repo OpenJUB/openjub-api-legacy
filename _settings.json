@@ -1,3 +1,5 @@
 {
-  "tokenSecret": "Something"
+  "port": 6969,
+  "tokenSecret": "Something",
+  "database": "mongodb://localhost/openjub"
 }
