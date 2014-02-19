@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var mongoose = require('mongoose');
+var colors = require('colors');
+var ldap = require('ldapjs');
+var modelImport = require('../lib/models');
+var pkg = require('../package');
+var settings = require('../settings');
+
+program
+  .version(pkg.version)
+  .option('-d, --drop', 'Delete Old Records')
+  .parse(process.argv);
+
+var Models; // holds all models available
+
+function setup () {
+  console.log('INFO'.cyan + ' Create connection to database');
+
+  mongoose.connect(settings.database);
+
+  Models = modelImport(mongoose);
+
+  console.log('OK'.green + ' Connection established');
+
+  return;
+};
+
+function drop () {
+  console.log('WARN'.yellow + ' Dropping all entries in the database');
+  // drop
+  console.log('OK'.green + ' All data dropped');
+
+  return;
+};
+
+function update () {
+  console.log('INFO'.cyan + ' Update all entries in database');
+  // update
+  console.log('OK'.green + ' All entries updated');
+
+  return;
+};
+
+(function main () {
+  setup();
+  if (program.drop) {
+    drop();
+  }
+  update();
+  return;
+})();

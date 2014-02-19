@@ -1,5 +1,10 @@
 {
   "port": 6969,
   "tokenSecret": "Something",
-  "database": "mongodb://localhost/openjub"
+  "database": "mongodb://localhost/openjub",
+  "ldap": {
+    "host": "jacobs.jacobs-university.de",
+    "port": 389,
+    "prefix": "JACOBS\\"
+  }
 }
