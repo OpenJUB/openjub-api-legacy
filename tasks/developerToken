@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var mongoose = require('mongoose');
+var inquirer = require('inquirer');
+var colors = require('colors');
+var slug = require('slug');
+var tokenUtil = require('../lib/utils/token');
+var pkg = require('../package');
+var settings = require('../settings');
+
+program
+  .version(pkg.version)
+  .option('-a, --app [name]', 'App Name (will be slugified)')
+  .option('-n, --name [author]', 'Name of author requesting token')
+  .option('-e, --email [address]', 'Email of author requesting token')
+  .option('-d, --text [description]', 'Short description of app')
+  .parse(process.argv);
+
+var logo = settings.logo.join('\n');
+console.log(logo.cyan);
+
+console.log('Generate Developer Access Token'.bold);
+
+var questions = [];
+
+if (!program.app) {
+  questions.push({
+    type: 'input',
+    name: 'app',
+    message: 'Name of Application (will be slugified):',
+    validate: function (value) {
+      var pass = value.length !== 0;
+      if (pass) {
+        return true;
+      } else {
+        return "Please Enter an Application Name"
+      }
+    }
+  });
+}
+
+if (!program.name) {
+  questions.push({
+    type: 'input',
+    name: 'name',
+    message: 'Name of Author Requesting Token:',
+    validate: function (value) {
+      var pass = value.length !== 0;
+      if (pass) {
+        return true;
+      } else {
+        return "Please Enter an Author"
+      }
+    }
+  });
+}
+
+if (program.email && program.email.indexOf('@jacobs-university.de') === -1) {
+  delete program.email;
+}
+
+if (!program.email) {
+  questions.push({
+    type: 'input',
+    name: 'email',
+    message: 'Email of Author Requesting Token:',
+    validate: function (value) {
+      if (value.indexOf('@jacobs-university.de') === -1) {
+        return "Please Enter a Valid Jacobs University Email"
+      } else {
+        return true;
+      }
+    }
+  });
+}
+
+if (!program.text) {
+  questions.push({
+    type: 'input',
+    name: 'description',
+    message: 'Short Description of Application:'
+  });
+}
+
+inquirer.prompt(questions, function (answers) {
+  var info = {};
+  info.username = program.app || answers.app;
+  info.name = program.name || answers.name;
+  info.email = program.email || answers.email;
+  info.description = program.text || answers.description;
+
+  info.username = slug(info.username);
+
+  console.log('INFO '.cyan + 'Generate Token');
+  var token = tokenUtil.generateDeveloper(info);
+  if (token === null) {
+    console.log('ERR '.red + 'Something went wrong');
+  }
+  console.log('OK '.green + 'Token generated');
+  console.log('---------------------------');
+  console.log('app-name: '.cyan + info.username);
+  console.log('token: '.cyan + token);
+});
+

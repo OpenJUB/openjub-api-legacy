@@ -30,7 +30,10 @@
     "connect-livereload": "~0.3.2",
     "commander": "~2.1.0",
     "colors": "~0.6.2",
-    "ldapjs": "~0.7.0"
+    "ldapjs": "~0.7.0",
+    "jsonwebtoken": "~0.1.0",
+    "inquirer": "~0.4.0",
+    "slug": "~0.4.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
