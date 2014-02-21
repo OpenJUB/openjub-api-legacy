@@ -3,7 +3,8 @@
 var program = require('commander');
 var mongoose = require('mongoose');
 var colors = require('colors');
-var ldap = require('ldapjs');
+var ldapjs = require('ldapjs');
+var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
 var modelImport = require('../lib/models');
 var pkg = require('../package');
 var settings = require('../settings');
@@ -15,14 +16,23 @@ program
 
 var Models; // holds all models available
 
-function setup () {
+function setup (callback) {
   console.log('INFO'.cyan + ' Create connection to database');
 
-  mongoose.connect(settings.database);
-
+  mongoose.connect(settings.database)
   Models = modelImport(mongoose);
 
   console.log('OK'.green + ' Connection established');
+
+  var user = "dcucleschi";
+  var password = "";
+  ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
+    if (!(err === null)) {
+      // handle error
+    }
+
+    callback();
+  });
 
   return;
 };
@@ -37,17 +47,58 @@ function drop () {
 
 function update () {
   console.log('INFO'.cyan + ' Update all entries in database');
-  // update
-  console.log('OK'.green + ' All entries updated');
+  
+  getStudents();
+  getCourses();
+
+  //console.log('OK'.green + ' All entries updated');
 
   return;
 };
 
-(function main () {
-  setup();
-  if (program.drop) {
-    drop();
+function cleanup() {
+  ldap.unbind(function(err) {
+    if (!(err === null)) {
+      // handle error
+    }
+  });
+};
+
+
+function getStudents() {
+
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  for (var i = 0; i <= alphabet.length; i++) {
+    var opts = {
+      filter: '(sAMAccountName='+alphabet[i]+'*)',
+      scope: 'sub'
+    };
+
+    ldap.search('OU=Users,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+
+      if (!(err === null)) {
+        // handle error
+      }
+
+      search.on('searchEntry', function (entry) {
+        // add to db
+      });
+    });
   }
-  update();
+}
+
+function getCourses() {
+
+}
+
+(function main () {
+  setup(function() {
+    if (program.drop) {
+      drop();
+    }
+
+    update();
+    //cleanup();
+  });
   return;
 })();
