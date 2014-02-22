@@ -88,7 +88,22 @@ function getStudents() {
 }
 
 function getCourses() {
+  var opts = {
+    filter: '(CN=GS-CAMPUSNET-COURSE-*)',
+    scope: 'sub'
+  };
 
+  ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+
+    if (!(err === null)) {
+      // handle error
+    }
+
+    search.on('searchEntry', function (entry) {
+      // add to db
+      // (!!!) still fires Size Limit Exceeded!
+    });
+  }); 
 }
 
 (function main () {
