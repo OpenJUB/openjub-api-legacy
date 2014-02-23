@@ -88,22 +88,25 @@ function getStudents() {
 }
 
 function getCourses() {
-  var opts = {
-    filter: '(CN=GS-CAMPUSNET-COURSE-*)',
-    scope: 'sub'
-  };
 
-  ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+  var alphabet = "0123456789AJ";
+  for (var i = 0; i <= alphabet.length; i++) {
+    var opts = {
+      filter: '(CN=GS-CAMPUSNET-COURSE-'+alphabet[i]+'*)',
+      scope: 'sub'
+    };
 
-    if (!(err === null)) {
-      // handle error
-    }
+    ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
 
-    search.on('searchEntry', function (entry) {
-      // add to db
-      // (!!!) still fires Size Limit Exceeded!
-    });
-  }); 
+      if (!(err === null)) {
+        // handle error
+      }
+
+      search.on('searchEntry', function (entry) {
+        // add to db
+      });
+    }); 
+  }
 }
 
 (function main () {
