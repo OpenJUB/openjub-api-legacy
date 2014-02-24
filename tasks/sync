@@ -17,7 +17,7 @@ program
 var Models; // holds all models available
 
 function setup (callback) {
-  console.log('INFO'.cyan + ' Create connection to database');
+  console.log('INFO'.cyan + ' Creating connection to database');
 
   mongoose.connect(settings.database)
   Models = modelImport(mongoose);
@@ -28,7 +28,7 @@ function setup (callback) {
   var password = "";
   ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
     if (!(err === null)) {
-      // handle error
+      //handle error
     }
 
     callback();
@@ -39,35 +39,64 @@ function setup (callback) {
 
 function drop () {
   console.log('WARN'.yellow + ' Dropping all entries in the database');
-  // drop
+  
+  Models.Student.remove(function(err) {
+    if (!(err === null)) {
+      // handle error
+    }
+  });
+
+  Models.Course.remove(function(err) {
+    if (!(err === null)) {
+      //handle error
+    }
+  });
+
   console.log('OK'.green + ' All data dropped');
 
   return;
 };
 
 function update () {
-  console.log('INFO'.cyan + ' Update all entries in database');
+  console.log('INFO'.cyan + ' Updating all entries in database');
+  var studentsDone, coursesDone;
   
-  getStudents();
-  getCourses();
+  getStudents(function(count) {
+    console.log('INFO'.cyan + ' Students retrieved (total: '+count +')');
+    studentsDone = 1;
+    cleanup(studentsDone, coursesDone);
+  });
 
-  //console.log('OK'.green + ' All entries updated');
+  getCourses(function(count) {
+    console.log('INFO'.cyan + ' Courses retrieved (total: '+count+')');
+    coursesDone = 1;
+    cleanup(studentsDone, coursesDone);
+  });
 
   return;
 };
 
-function cleanup() {
+function cleanup(s,c) {
+  if (!s || !c) {
+    return;
+  }
+
+  console.log('OK'.green + ' All entries updated');
   ldap.unbind(function(err) {
     if (!(err === null)) {
       // handle error
     }
   });
+
+  process.exit();
 };
 
 
-function getStudents() {
+function getStudents(callback) {
 
   var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var for_count = 0;
+  var count = 0;
   for (var i = 0; i <= alphabet.length; i++) {
     var opts = {
       filter: '(sAMAccountName='+alphabet[i]+'*)',
@@ -81,15 +110,36 @@ function getStudents() {
       }
 
       search.on('searchEntry', function (entry) {
-        // add to db
+        count++;
+        var obj = parseStudent(entry.object);
+
+        if (obj === null) {
+          // Couldn't parse the student. Ignore then.
+          return;
+        }
+
+        var person = new Models.Student(obj);
+        person.save(function(err) {
+          if (!(err === null)) {
+            // handle error
+          }
+        });
+      });
+
+      search.on('end', function(result) {
+        if (++for_count == alphabet.length) {
+          callback(count);
+        }
       });
     });
-  }
-}
+  } 
+};
 
-function getCourses() {
+function getCourses(callback) {
 
   var alphabet = "0123456789AJ";
+  var for_count = 0;
+  var count = 0;
   for (var i = 0; i <= alphabet.length; i++) {
     var opts = {
       filter: '(CN=GS-CAMPUSNET-COURSE-'+alphabet[i]+'*)',
@@ -103,10 +153,79 @@ function getCourses() {
       }
 
       search.on('searchEntry', function (entry) {
-        // add to db
+        count++;
+        var obj = parseCourse(entry.object);
+
+        if (obj === null) {
+          // Couldn't parse the course. Ignore then.
+          return;
+        }
+
+        var course = new Models.Course(obj);
+        course.save(function(err) {
+          if (!(err === null)) {
+            // handle error
+          }
+        });
+      });
+
+      search.on('end', function(result) {
+        if (++for_count == alphabet.length) {
+          callback(count);
+        }
       });
     }); 
   }
+};
+
+function parseStudent(obj) {
+  var result = {};
+
+  var name = obj.displayName.split(", ");
+
+  if (!name) {
+    // No name, ignoring..
+    return null;
+  }
+
+  result.firstName = name[1];
+  result.lastName = name[0];
+
+  result.eid = obj.employeeID;
+  result.type = obj.employeeType;
+  result.email = obj.mail;
+  result.username = obj.mailNickname;
+
+  if (!result.username) {
+    // Couldn't find CN username (mandatory field).
+    return null;
+  }
+
+  result.major = obj.extensionAttribute3;
+  result.country = obj.extensionAttribute5;
+  result.description = obj.extensionAttribute2;
+
+  return result;
+};
+
+function parseCourse(obj) {
+  var result = {};
+
+  var regex = /\(.+\)/;
+  var matches = regex.exec(obj.description);
+
+  if (!matches) {
+    // Could not parse the name of the course, ignoring...
+    return null;
+  }
+
+  var name = matches[0];
+  name = name.slice(1,name.length-1);
+
+  result.name = name;
+  result.id = obj.displayName.replace("GS-CAMPUSNET-COURSE-","");
+
+  return result;
 }
 
 (function main () {
@@ -116,7 +235,6 @@ function getCourses() {
     }
 
     update();
-    //cleanup();
   });
   return;
 })();
