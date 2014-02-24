@@ -4,6 +4,7 @@ var program = require('commander');
 var mongoose = require('mongoose');
 var colors = require('colors');
 var ldapjs = require('ldapjs');
+var prompt = require('prompt');
 var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
 var modelImport = require('../lib/models');
 var pkg = require('../package');
@@ -12,6 +13,8 @@ var settings = require('../settings');
 program
   .version(pkg.version)
   .option('-d, --drop', 'Delete Old Records')
+  .option('-u, --username [username]', 'Username')
+  .option('-p, --password [password]', 'Password')
   .parse(process.argv);
 
 var Models; // holds all models available
@@ -24,11 +27,27 @@ function setup (callback) {
 
   console.log('OK'.green + ' Connection established');
 
-  var user = "dcucleschi";
-  var password = "";
+  var user, password;
+  
+  if (program.username) {
+    user = program.username;
+  }
+  else {
+    // use prompt
+  }
+
+  if (program.password) {
+    password = program.password;
+  }
+  else {
+    // use prompt
+  }
+
+
   ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
     if (!(err === null)) {
-      //handle error
+      console.log('ERR'.red + " Couldn't login with the details provided");
+      process.exit(-1);
     }
 
     callback();
@@ -42,13 +61,13 @@ function drop () {
   
   Models.Student.remove(function(err) {
     if (!(err === null)) {
-      // handle error
+      console.log('ERR'.red + ' Failed to remove the students. Error: ' + err);
     }
   });
 
   Models.Course.remove(function(err) {
     if (!(err === null)) {
-      //handle error
+      console.log('ERR'.red + ' Failed to remove the courses. Error: ' + err);
     }
   });
 
@@ -84,7 +103,7 @@ function cleanup(s,c) {
   console.log('OK'.green + ' All entries updated');
   ldap.unbind(function(err) {
     if (!(err === null)) {
-      // handle error
+      console.log('ERR'.red + " Couldn't unbind from LDAP (nothing will probably happen, but bad nonetheless)");
     }
   });
 
@@ -106,7 +125,7 @@ function getStudents(callback) {
     ldap.search('OU=Users,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
 
       if (!(err === null)) {
-        // handle error
+        console.log('ERR'.red + " Couldn't retrieve students from LDAP. Error: " + err);
       }
 
       search.on('searchEntry', function (entry) {
@@ -114,14 +133,15 @@ function getStudents(callback) {
         var obj = parseStudent(entry.object);
 
         if (obj === null) {
-          // Couldn't parse the student. Ignore then.
+          // happens a lot, annoying, do nothing instead :P
+          //console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
           return;
         }
 
         var person = new Models.Student(obj);
         person.save(function(err) {
           if (!(err === null)) {
-            // handle error
+            console.log('ERR'.red + ' Failed to save the student. Error: ' + err);
           }
         });
       });
@@ -149,7 +169,7 @@ function getCourses(callback) {
     ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
 
       if (!(err === null)) {
-        // handle error
+        console.log('ERR'.red + " Couldn't retrieve the courses from LDAP. Error: " + err);
       }
 
       search.on('searchEntry', function (entry) {
@@ -157,14 +177,14 @@ function getCourses(callback) {
         var obj = parseCourse(entry.object);
 
         if (obj === null) {
-          // Couldn't parse the course. Ignore then.
+          console.log('WARN'.yellow + " Course can't be parsed. Ignoring..");
           return;
         }
 
         var course = new Models.Course(obj);
         course.save(function(err) {
           if (!(err === null)) {
-            // handle error
+            console.log('ERR'.red + ' Failed to save the course. Error: ' + err);
           }
         });
       });
