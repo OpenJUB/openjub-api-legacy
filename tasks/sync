@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var colors = require('colors');
 var ldapjs = require('ldapjs');
 var prompt = require('prompt');
+var inquirer = require('inquirer');
 var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
 var modelImport = require('../lib/models');
 var pkg = require('../package');
@@ -28,37 +29,69 @@ function setup (callback) {
   console.log('OK'.green + ' Connection established');
 
   var user, password;
-  
+
+  var questions = [];
+
   if (program.username) {
     user = program.username;
   }
   else {
-    // use prompt
+    questions.push({
+      type: 'input',
+      name: 'username',
+      message: 'CampusNet username',
+      validate: function (value) {
+        var pass = value.length !== 0;
+        if (pass) {
+          return true;
+        } else {
+          return 'Please Enter a Username'
+        }
+      }
+    });
   }
 
   if (program.password) {
     password = program.password;
   }
   else {
-    // use prompt
+    questions.push({
+      type: 'password',
+      name: 'password',
+      message: 'CampusNet password',
+      validate: function (value) {
+        var pass = value.length !== 0;
+        if (pass) {
+          return true;
+        } else {
+          return 'Please Enter a Password'
+        }
+      }
+    });
   }
 
+  inquirer.prompt(questions, function (answers) {
+    user = user || answers.username;
+    password = password || answers.password;
 
-  ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
-    if (!(err === null)) {
-      console.log('ERR'.red + " Couldn't login with the details provided");
-      process.exit(-1);
-    }
+    ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
+      if (!(err === null)) {
+        console.log('ERR'.red + " Couldn't login with the details provided");
+        process.exit(-1);
+      }
 
-    callback();
+      callback();
+    });
+
+    return;
+
   });
 
-  return;
 };
 
 function drop () {
   console.log('WARN'.yellow + ' Dropping all entries in the database');
-  
+
   Models.Student.remove(function(err) {
     if (!(err === null)) {
       console.log('ERR'.red + ' Failed to remove the students. Error: ' + err);
@@ -79,7 +112,7 @@ function drop () {
 function update () {
   console.log('INFO'.cyan + ' Updating all entries in database');
   var studentsDone, coursesDone;
-  
+
   getStudents(function(count) {
     console.log('INFO'.cyan + ' Students retrieved (total: '+count +')');
     studentsDone = 1;
@@ -152,7 +185,7 @@ function getStudents(callback) {
         }
       });
     });
-  } 
+  }
 };
 
 function getCourses(callback) {
@@ -194,7 +227,7 @@ function getCourses(callback) {
           callback(count);
         }
       });
-    }); 
+    });
   }
 };
 
