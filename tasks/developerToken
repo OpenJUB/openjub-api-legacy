@@ -34,7 +34,7 @@ if (!program.app) {
       if (pass) {
         return true;
       } else {
-        return "Please Enter an Application Name"
+        return 'Please Enter an Application Name'
       }
     }
   });
@@ -50,7 +50,7 @@ if (!program.name) {
       if (pass) {
         return true;
       } else {
-        return "Please Enter an Author"
+        return 'Please Enter an Author'
       }
     }
   });
@@ -67,7 +67,7 @@ if (!program.email) {
     message: 'Email of Author Requesting Token:',
     validate: function (value) {
       if (value.indexOf('@jacobs-university.de') === -1) {
-        return "Please Enter a Valid Jacobs University Email"
+        return 'Please Enter a Valid Jacobs University Email'
       } else {
         return true;
       }
@@ -102,4 +102,3 @@ inquirer.prompt(questions, function (answers) {
   console.log('app-name: '.cyan + info.username);
   console.log('token: '.cyan + token);
 });
-
