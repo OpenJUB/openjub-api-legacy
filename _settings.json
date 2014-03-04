@@ -5,7 +5,8 @@
     "secret": "Something",
     "options": {
       "expiresInMinutes": 300
-    }
+    },
+    "acceptInBody": false
   },
   "database": "mongodb://localhost/openjub",
   "ldap": {
@@ -13,6 +14,7 @@
     "port": 389,
     "prefix": "JACOBS\\\\"
   },
+  "imageBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/image.php?id=",
   "logo": ["                                                                            ",
     "           0xxxx00                                                          ",
     "             00xxxx0    00                                        00        ",

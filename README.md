@@ -1,3 +1,5 @@
+![](public/images/logo_small.png)
+
 # OpenJUB API
 
 Server providing the actual OpenJUB API
@@ -15,14 +17,15 @@ Server providing the actual OpenJUB API
 ```
   $ git clone git@github.com/openjub/openjub-api.git
   $ cd openjub-api
-  $ npm install -g grunt grunt-cli express
+  $ npm install -g grunt grunt-cli express bower
   $ npm install
+  $ bower install
   $ ./tasks/sync # gets data from LDAP (need on campus connection)
 ```
 
 ## Run Server
 
-Run the following two commands to start the server
+Run the following two commands to start the server in two different folders
 
 ```
   $ mongod # start in separate tab or as daemon
@@ -41,4 +44,4 @@ Navigate with your browser to: `http://localhost:6969/docs`
 
 ## Contributors
 - Dominik Kundel <dominik.kundel@gmail.com>
-- Dmitrii Cuclescin
+- Dmitrii Cuclescin <dmitrii.cucleschin@gmail.com>

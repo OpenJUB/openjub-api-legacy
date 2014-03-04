@@ -1,0 +1,26 @@
+{
+  "name": "openjub-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/OpenJUB/openjub-api",
+  "authors": [
+    "Dominik Kundel <dominik.kundel@gmail.com>"
+  ],
+  "keywords": [
+    "openjub",
+    "api",
+    "server"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1"
+  }
+}

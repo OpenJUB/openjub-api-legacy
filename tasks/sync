@@ -244,6 +244,8 @@ function parseStudent(obj) {
   result.firstName = name[1];
   result.lastName = name[0];
 
+  result.fullName = result.firstName + ' ' + result.lastName;
+
   result.eid = obj.employeeID;
   result.type = obj.employeeType;
   result.email = obj.mail;
@@ -276,7 +278,7 @@ function parseCourse(obj) {
   name = name.slice(1,name.length-1);
 
   result.name = name;
-  result.id = obj.displayName.replace("GS-CAMPUSNET-COURSE-","");
+  result.number = obj.displayName.replace("GS-CAMPUSNET-COURSE-","");
 
   return result;
 }

@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+<script>
+if (window.opener) {
+  var event = new Event('JUB.authed');
+  window.opener.document.dispatchEvent(event);
+}
+</script>
+</body>
+</html>
