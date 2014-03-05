@@ -165,8 +165,7 @@ function getStudents(callback) {
         var obj = parseStudent(entry.object);
 
         if (obj === null) {
-          // happens a lot, annoying, do nothing instead :P
-          //console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
+          console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
           errors++;
           return;
         }
@@ -254,14 +253,22 @@ function parseStudent(obj) {
   result.lastName = name[0];
   result.fullName = result.firstName + ' ' + result.lastName;
   result.eid = obj.employeeID;
-  result.username = obj.mailNickname;
+  result.username = obj.sAMAccountName;
 
-  result.type = obj.employeeType;
-  result.email = obj.mail;
 
   if (!result.username || !result.firstName || !result.lastName || !result.eid) {
     // Mandatory fields are missing!
     return null;
+  }
+
+  result.type = obj.employeeType;
+  if (!result.type) {
+    result.type = "";
+  }
+
+  result.email = obj.mail;
+  if (!result.email) {
+    result.email = "";
   }
 
   result.major = obj.extensionAttribute3;
@@ -279,8 +286,35 @@ function parseStudent(obj) {
     result.description = "";
   }
 
+  result.phone = obj.telephoneNumber;
+  if (!result.phone) {
+    result.phone = "";
+  }
+
+  result.college = parseCollege(obj.houseIdentifier);
+
+  //result.room = ... - need to create a map phone->room
+  //result.courses = obj.memberOf; - too ugly, needs parsing of some sort.
   return result;
 };
+
+function parseCollege(obj) {
+  if (obj === "Alfried Krupp College") {
+    return "Krupp";
+  }
+  else if (obj === "College III") {
+    return "C3";
+  }
+  else if (obj === "College Nordmetall") {
+    return "Nordmetall";
+  }
+  else if (obj === "Mercator College") {
+    return "Mercator";
+  }
+  else {
+    return "";
+  }
+}
 
 function parseCourse(obj) {
   var result = {};
