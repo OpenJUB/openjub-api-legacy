@@ -105,7 +105,6 @@ function drop () {
   });
 
   console.log('OK'.green + ' All data dropped');
-
   return;
 };
 
@@ -113,14 +112,14 @@ function update () {
   console.log('INFO'.cyan + ' Updating all entries in database');
   var studentsDone, coursesDone;
 
-  getStudents(function(count) {
-    console.log('INFO'.cyan + ' Students retrieved (total: '+count +')');
+  getStudents(function(count, errors) {
+    console.log('INFO'.cyan + ' Students retrieved (total: '+count +', errors: '+errors+')');
     studentsDone = 1;
     cleanup(studentsDone, coursesDone);
   });
 
-  getCourses(function(count) {
-    console.log('INFO'.cyan + ' Courses retrieved (total: '+count+')');
+  getCourses(function(count, errors) {
+    console.log('INFO'.cyan + ' Courses retrieved (total: '+count+', errors:  '+errors+')');
     coursesDone = 1;
     cleanup(studentsDone, coursesDone);
   });
@@ -149,6 +148,7 @@ function getStudents(callback) {
   var alphabet = "abcdefghijklmnopqrstuvwxyz";
   var for_count = 0;
   var count = 0;
+  var errors = 0;
   for (var i = 0; i <= alphabet.length; i++) {
     var opts = {
       filter: '(sAMAccountName='+alphabet[i]+'*)',
@@ -162,26 +162,21 @@ function getStudents(callback) {
       }
 
       search.on('searchEntry', function (entry) {
-        count++;
         var obj = parseStudent(entry.object);
 
         if (obj === null) {
-          // happens a lot, annoying, do nothing instead :P
-          //console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
+          console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
+          errors++;
           return;
         }
 
-        var person = new Models.Student(obj);
-        person.save(function(err) {
-          if (!(err === null)) {
-            console.log('ERR'.red + ' Failed to save the student. Error: ' + err);
-          }
-        });
+        count++;
+        save_student(obj);
       });
 
       search.on('end', function(result) {
         if (++for_count == alphabet.length) {
-          callback(count);
+          callback(count, errors);
         }
       });
     });
@@ -193,6 +188,7 @@ function getCourses(callback) {
   var alphabet = "0123456789AJ";
   var for_count = 0;
   var count = 0;
+  var errors = 0;
   for (var i = 0; i <= alphabet.length; i++) {
     var opts = {
       filter: '(CN=GS-CAMPUSNET-COURSE-'+alphabet[i]+'*)',
@@ -206,30 +202,42 @@ function getCourses(callback) {
       }
 
       search.on('searchEntry', function (entry) {
-        count++;
         var obj = parseCourse(entry.object);
 
         if (obj === null) {
           console.log('WARN'.yellow + " Course can't be parsed. Ignoring..");
+          errors++;
           return;
         }
 
-        var course = new Models.Course(obj);
-        course.save(function(err) {
-          if (!(err === null)) {
-            console.log('ERR'.red + ' Failed to save the course. Error: ' + err);
-          }
-        });
+        count++;
+        save_course(obj);
       });
 
       search.on('end', function(result) {
         if (++for_count == alphabet.length) {
-          callback(count);
+          callback(count, errors);
         }
       });
     });
   }
 };
+
+function save_course(obj) {
+  Models.Course.update({number: obj.number}, obj, {upsert: true}, function (err) {
+    if (!(err === null)) {
+      console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
+    }
+  });
+}
+
+function save_student(obj) {
+  Models.Student.update({username: obj.username}, obj, {upsert: true}, function (err) {
+    if (!(err === null)) {
+      console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
+    }
+  });
+}
 
 function parseStudent(obj) {
   var result = {};
@@ -243,25 +251,70 @@ function parseStudent(obj) {
 
   result.firstName = name[1];
   result.lastName = name[0];
-
   result.fullName = result.firstName + ' ' + result.lastName;
-
   result.eid = obj.employeeID;
-  result.type = obj.employeeType;
-  result.email = obj.mail;
-  result.username = obj.mailNickname;
+  result.username = obj.sAMAccountName;
 
-  if (!result.username) {
-    // Couldn't find CN username (mandatory field).
+
+  if (!result.username || !result.firstName || !result.lastName || !result.eid) {
+    // Mandatory fields are missing!
     return null;
   }
 
-  result.major = obj.extensionAttribute3;
-  result.country = obj.extensionAttribute5;
-  result.description = obj.extensionAttribute2;
+  result.type = obj.employeeType;
+  if (!result.type) {
+    result.type = "";
+  }
 
+  result.email = obj.mail;
+  if (!result.email) {
+    result.email = "";
+  }
+
+  result.major = obj.extensionAttribute3;
+  if (!result.major) {
+      result.major = "";
+  }
+
+  result.country = obj.extensionAttribute5;
+  if (!result.country) {
+    result.country = "";
+  }
+
+  result.description = obj.extensionAttribute2;
+  if (!result.description) {
+    result.description = "";
+  }
+
+  result.phone = obj.telephoneNumber;
+  if (!result.phone) {
+    result.phone = "";
+  }
+
+  result.college = parseCollege(obj.houseIdentifier);
+
+  //result.room = ... - need to create a map phone->room
+  //result.courses = obj.memberOf; - too ugly, needs parsing of some sort.
   return result;
 };
+
+function parseCollege(obj) {
+  if (obj === "Alfried Krupp College") {
+    return "Krupp";
+  }
+  else if (obj === "College III") {
+    return "C3";
+  }
+  else if (obj === "College Nordmetall") {
+    return "Nordmetall";
+  }
+  else if (obj === "Mercator College") {
+    return "Mercator";
+  }
+  else {
+    return "";
+  }
+}
 
 function parseCourse(obj) {
   var result = {};
