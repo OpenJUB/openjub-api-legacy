@@ -20,6 +20,7 @@ Server providing the actual OpenJUB API
   $ npm install -g grunt grunt-cli express bower
   $ npm install
   $ bower install
+  $ cp _settings.json settings.json # change config if necessary
   $ ./tasks/sync # gets data from LDAP (need on campus connection)
 ```
 
