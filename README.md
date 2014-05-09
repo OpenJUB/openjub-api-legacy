@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/openjub/openjub-api.png?label=ready&title=Ready)](https://waffle.io/openjub/openjub-api)
 ![](public/images/logo_small.png)
 
 # OpenJUB API
