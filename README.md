@@ -22,6 +22,7 @@ Server providing the actual OpenJUB API
   $ npm install
   $ bower install
   $ cp _settings.json settings.json # change config if necessary
+  $ ./tasks/phoneRoomMapping # imports a mapping of phone -> room
   $ ./tasks/sync # gets data from LDAP (need on campus connection)
 ```
 
