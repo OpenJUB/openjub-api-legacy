@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var mongoose = require('mongoose');
+var colors = require('colors');
+var ldapjs = require('ldapjs');
+var prompt = require('prompt');
+var inquirer = require('inquirer');
+var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
+var modelImport = require('../lib/models');
+var pkg = require('../package');
+var settings = require('../settings');
+var mapping = require('./phone-room-mapping.json');
+
+mongoose.connect(settings.database);
+Models = modelImport(mongoose);
+
+for (var i = 0; i < mapping.length; i++) {
+  if (mapping[i].phone && mapping[i].room) {
+    var m = new Models.PhoneRoom(mapping[i]);
+    console.log('model', m);
+    m.save(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+}
+return;

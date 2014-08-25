@@ -6,8 +6,16 @@
 <body>
 <script>
 if (window.opener) {
-  var event = new Event('JUB.authed');
-  window.opener.document.dispatchEvent(event);
+  var hash = window.location.hash;
+  if (hash.indexOf('#token') === 0) {
+    var token = window.location.hash.substr('#token='.length);
+    var data = {
+      'token': token
+    };
+    window.opener.postMessage(JSON.stringify(data), '*');
+  } else {
+    window.history.back();
+  }
 }
 </script>
 </body>

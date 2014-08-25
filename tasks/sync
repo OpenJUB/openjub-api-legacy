@@ -170,8 +170,18 @@ function getStudents(callback) {
           return;
         }
 
-        count++;
-        save_student(obj);
+        Models.PhoneRoom.findOne({'phone':obj.phone}, function (err, entry) {
+          if (err) {
+            console.log('ERR'.red + " Couldn't retrieve room. Error: " + err);
+          }
+          if (entry) {
+            obj.room = entry.room;
+          } else {
+            obj.room = '';
+          }
+          count++;
+          save_student(obj);
+        });
       });
 
       search.on('end', function(result) {
@@ -291,6 +301,22 @@ function parseStudent(obj) {
     result.phone = "";
   }
 
+  result.description = result.description.replace(/int /g, 'int_');
+  result.description = result.description.replace(/class /g, '');
+  var description = result.description.replace(/\(.*\)/g, '');
+  description = description.split(' ');
+  if (description.length >= 2) {
+    result.status = parseStatus(description[0]);
+    result.year = parseInt(description[1], 10);
+    result.year = isNaN(result.year) ? '' : result.year.toString();
+    result.majorShort = description.slice(2).join(' ').trim();
+  } else {
+    result.year = '';
+    result.majorShort = '';
+    result.status = '';
+  }
+  
+
   result.college = parseCollege(obj.houseIdentifier);
 
   //result.room = ... - need to create a map phone->room
@@ -313,6 +339,23 @@ function parseCollege(obj) {
   }
   else {
     return "";
+  }
+}
+
+function parseStatus(status) {
+  status = status.toLowerCase();
+  if (status === 'ug') {
+    return 'undergrad';
+  } else if (status === 'm') {
+    return 'master';
+  } else if (status === 'fy') {
+    return 'foundation-year';
+  } else if (status === 'phd') {
+    return 'phd';
+  } else if (status === 'int_phd') {
+    return 'phd-integrated';
+  } else {
+    return '';
   }
 }
 
