@@ -152,6 +152,7 @@ function getStudents(callback) {
   var for_count = 0;
   var count = 0;
   var errors = 0;
+  var block = 0;
 
   //we don't want to have mroe than one query at a time as that might result in bugs.
   var iteration = function(i){
@@ -168,12 +169,13 @@ function getStudents(callback) {
         }
 
         search.on('searchEntry', function (entry) {
+          block++;
           var obj = parseStudent(entry.object);
-          process.stdout.write("*");
 
           if (obj === null) {
             console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
             errors++;
+            block--;
             return;
           }
 
@@ -187,14 +189,23 @@ function getStudents(callback) {
               obj.room = '';
             }
             count++;
-            save_student(obj);
+            save_student(obj, function(){
+              block--;
+            });
           });
         });
 
         search.on('end', function(result) {
           if (++for_count == alphabet.length) {
-            console.log("");
-            callback(count, errors);
+            var next = function(){
+              if(block > 0){
+                return setTimeout(next, 1000);
+              }
+              callback(count, errors);
+            }
+
+            next();
+
           } else {
             iteration(i+1); //next iteration after the end. scripts/cd
           }
@@ -212,6 +223,7 @@ function getCourses(callback) {
   var for_count = 0;
   var count = 0;
   var errors = 0;
+  var block = 0;
 
   //make sure we only have one query at a time.
   var iteration = function(i){
@@ -222,30 +234,37 @@ function getCourses(callback) {
       };
 
       ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
-
         if (!(err === null)) {
           console.log('ERR'.red + " Couldn't retrieve the courses from LDAP. Error: " + err);
         }
 
         search.on('searchEntry', function (entry) {
+          block++;
           var obj = parseCourse(entry.object);
-
-          process.stdout.write("-");
 
           if (obj === null) {
             console.log('WARN'.yellow + " Course can't be parsed. Ignoring..");
             errors++;
+            block--;
             return;
           }
 
           count++;
-          save_course(obj);
+          save_course(obj, function(){
+            block--;
+          });
         });
 
         search.on('end', function(result) {
           if (++for_count == alphabet.length) {
-            console.log("");
-            callback(count, errors);
+            var next = function(){
+              if(block > 0){
+                return setTimeout(next, 1000);
+              }
+              callback(count, errors);
+            }
+
+            next();
           } else {
             iteration(i+1);
           }
@@ -258,19 +277,23 @@ function getCourses(callback) {
 
 };
 
-function save_course(obj) {
+function save_course(obj, callback) {
   Models.Course.update({number: obj.number}, obj, {upsert: true}, function (err) {
     if (!(err === null)) {
       console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
     }
+
+    callback();
   });
 }
 
-function save_student(obj) {
+function save_student(obj, callback) {
   Models.Student.update({username: obj.username}, obj, {upsert: true}, function (err) {
     if (!(err === null)) {
       console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
     }
+
+    callback();
   });
 }
 
