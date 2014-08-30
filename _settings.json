@@ -15,7 +15,7 @@
     "prefix": "JACOBS\\\\"
   },
   "imageBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/image.php?id=",
-  "imageApiUrl": "http://campus.jacobs-university-usg.de:6969/user/:account/image.jpg",
+  "imageApiUrl": "http://open.jacobs-cs.club/user/:account/image.jpg",
   "logo": ["                                                                            ",
     "           0xxxx00                                                          ",
     "             00xxxx0    00                                        00        ",
