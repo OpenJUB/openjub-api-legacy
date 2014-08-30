@@ -15,6 +15,8 @@ var mapping = require('./phone-room-mapping.json');
 mongoose.connect(settings.database);
 Models = modelImport(mongoose);
 
+var done = 0; //keep a counter of what we have finished
+
 for (var i = 0; i < mapping.length; i++) {
   if (mapping[i].phone && mapping[i].room) {
     var m = new Models.PhoneRoom(mapping[i]);
@@ -22,6 +24,11 @@ for (var i = 0; i < mapping.length; i++) {
     m.save(function(err) {
       if (err) {
         console.log(err);
+      } else {
+        done++;
+        if(done == mapping.length){ //we have now finished saving everything,
+          process.exit(0); //so we can exit
+        }
       }
     });
   }
