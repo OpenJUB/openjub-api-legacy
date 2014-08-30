@@ -112,17 +112,20 @@ function update () {
   console.log('INFO'.cyan + ' Updating all entries in database');
   var studentsDone, coursesDone;
 
+  //first get the students
   getStudents(function(count, errors) {
     console.log('INFO'.cyan + ' Students retrieved (total: '+count +', errors: '+errors+')');
     studentsDone = 1;
-    cleanup(studentsDone, coursesDone);
+
+    //and then the courses
+    getCourses(function(count, errors) {
+      console.log('INFO'.cyan + ' Courses retrieved (total: '+count+', errors:  '+errors+')');
+      coursesDone = 1;
+      cleanup(studentsDone, coursesDone);
+    });
   });
 
-  getCourses(function(count, errors) {
-    console.log('INFO'.cyan + ' Courses retrieved (total: '+count+', errors:  '+errors+')');
-    coursesDone = 1;
-    cleanup(studentsDone, coursesDone);
-  });
+
 
   return;
 };
@@ -149,48 +152,69 @@ function getStudents(callback) {
   var for_count = 0;
   var count = 0;
   var errors = 0;
-  for (var i = 0; i <= alphabet.length; i++) {
-    var opts = {
-      filter: '(sAMAccountName='+alphabet[i]+'*)',
-      scope: 'sub'
-    };
+  var block = 0;
 
-    ldap.search('OU=Users,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+  //we don't want to have mroe than one query at a time as that might result in bugs.
+  var iteration = function(i){
+    if(i <= alphabet.length){
+      var opts = {
+        filter: '(sAMAccountName='+alphabet[i]+'*)',
+        scope: 'sub'
+      };
 
-      if (!(err === null)) {
-        console.log('ERR'.red + " Couldn't retrieve students from LDAP. Error: " + err);
-      }
+      ldap.search('OU=Users,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
 
-      search.on('searchEntry', function (entry) {
-        var obj = parseStudent(entry.object);
-
-        if (obj === null) {
-          console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
-          errors++;
-          return;
+        if (!(err === null)) {
+          console.log('ERR'.red + " Couldn't retrieve students from LDAP. Error: " + err);
         }
 
-        Models.PhoneRoom.findOne({'phone':obj.phone}, function (err, entry) {
-          if (err) {
-            console.log('ERR'.red + " Couldn't retrieve room. Error: " + err);
+        search.on('searchEntry', function (entry) {
+          block++;
+          var obj = parseStudent(entry.object);
+
+          if (obj === null) {
+            console.log('WARN'.yellow + " Student can't be parsed. Ignoring..");
+            errors++;
+            block--;
+            return;
           }
-          if (entry) {
-            obj.room = entry.room;
+
+          Models.PhoneRoom.findOne({'phone':obj.phone}, function (err, entry) {
+            if (err) {
+              console.log('ERR'.red + " Couldn't retrieve room. Error: " + err);
+            }
+            if (entry) {
+              obj.room = entry.room;
+            } else {
+              obj.room = '';
+            }
+            count++;
+            save_student(obj, function(){
+              block--;
+            });
+          });
+        });
+
+        search.on('end', function(result) {
+          if (++for_count == alphabet.length) {
+            var next = function(){
+              if(block > 0){
+                return setTimeout(next, 1000);
+              }
+              callback(count, errors);
+            }
+
+            next();
+
           } else {
-            obj.room = '';
+            iteration(i+1); //next iteration after the end. scripts/cd
           }
-          count++;
-          save_student(obj);
         });
       });
+    }
+  };
 
-      search.on('end', function(result) {
-        if (++for_count == alphabet.length) {
-          callback(count, errors);
-        }
-      });
-    });
-  }
+  iteration(0);
 };
 
 function getCourses(callback) {
@@ -199,53 +223,77 @@ function getCourses(callback) {
   var for_count = 0;
   var count = 0;
   var errors = 0;
-  for (var i = 0; i <= alphabet.length; i++) {
-    var opts = {
-      filter: '(CN=GS-CAMPUSNET-COURSE-'+alphabet[i]+'*)',
-      scope: 'sub'
-    };
+  var block = 0;
 
-    ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+  //make sure we only have one query at a time.
+  var iteration = function(i){
+    if(i < alphabet.length){
+      var opts = {
+        filter: '(CN=GS-CAMPUSNET-COURSE-'+alphabet[i]+'*)',
+        scope: 'sub'
+      };
 
-      if (!(err === null)) {
-        console.log('ERR'.red + " Couldn't retrieve the courses from LDAP. Error: " + err);
-      }
-
-      search.on('searchEntry', function (entry) {
-        var obj = parseCourse(entry.object);
-
-        if (obj === null) {
-          console.log('WARN'.yellow + " Course can't be parsed. Ignoring..");
-          errors++;
-          return;
+      ldap.search('OU=Groups,OU=CampusNet,DC=jacobs,DC=jacobs-university,DC=de', opts, function(err,search) {
+        if (!(err === null)) {
+          console.log('ERR'.red + " Couldn't retrieve the courses from LDAP. Error: " + err);
         }
 
-        count++;
-        save_course(obj);
-      });
+        search.on('searchEntry', function (entry) {
+          block++;
+          var obj = parseCourse(entry.object);
 
-      search.on('end', function(result) {
-        if (++for_count == alphabet.length) {
-          callback(count, errors);
-        }
+          if (obj === null) {
+            console.log('WARN'.yellow + " Course can't be parsed. Ignoring..");
+            errors++;
+            block--;
+            return;
+          }
+
+          count++;
+          save_course(obj, function(){
+            block--;
+          });
+        });
+
+        search.on('end', function(result) {
+          if (++for_count == alphabet.length) {
+            var next = function(){
+              if(block > 0){
+                return setTimeout(next, 1000);
+              }
+              callback(count, errors);
+            }
+
+            next();
+          } else {
+            iteration(i+1);
+          }
+        });
       });
-    });
-  }
+    }
+  };
+
+  iteration(0);
+
 };
 
-function save_course(obj) {
+function save_course(obj, callback) {
   Models.Course.update({number: obj.number}, obj, {upsert: true}, function (err) {
     if (!(err === null)) {
       console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
     }
+
+    callback();
   });
 }
 
-function save_student(obj) {
+function save_student(obj, callback) {
   Models.Student.update({username: obj.username}, obj, {upsert: true}, function (err) {
     if (!(err === null)) {
       console.log('ERR'.red + ' Failed to update/insert the student with error: ' + err);
     }
+
+    callback();
   });
 }
 
@@ -315,7 +363,7 @@ function parseStudent(obj) {
     result.majorShort = '';
     result.status = '';
   }
-  
+
 
   result.college = parseCollege(obj.houseIdentifier);
 
