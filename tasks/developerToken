@@ -85,12 +85,12 @@ if (!program.text) {
 
 inquirer.prompt(questions, function (answers) {
   var info = {};
-  info.username = program.app || answers.app;
+  info.app = program.app || answers.app;
   info.name = program.name || answers.name;
   info.email = program.email || answers.email;
   info.description = program.text || answers.description;
 
-  info.username = slug(info.username);
+  info.app = slug(info.app);
 
   console.log('INFO '.cyan + 'Generate Token');
   var token = tokenUtil.generateDeveloper(info);
