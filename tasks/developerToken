@@ -99,6 +99,6 @@ inquirer.prompt(questions, function (answers) {
   }
   console.log('OK '.green + 'Token generated');
   console.log('---------------------------');
-  console.log('app-name: '.cyan + info.username);
+  console.log('app-name: '.cyan + info.app);
   console.log('token: '.cyan + token);
 });
