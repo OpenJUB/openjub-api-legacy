@@ -48,3 +48,4 @@ Navigate with your browser to: `http://localhost:6969/docs`
 ## Contributors
 - Dominik Kundel <dominik.kundel@gmail.com>
 - Dmitrii Cuclescin <dmitrii.cucleschin@gmail.com>
+- Tom Wiesing <tom.wiesing@gmail.com>
