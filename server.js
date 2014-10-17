@@ -4,7 +4,12 @@
 var express = require('express');
 var app = express();
 var colors = require('colors');
-var settings = require('./settings');
+try{
+  var settings = require('./settings');
+} catch(e){
+  console.log('ERR'.red + ' Error parsing settings. Make sure settings.json exists. ');
+  process.exit(1);
+}
 
 // Express Configuration
 require('./lib/config/express')(app);
