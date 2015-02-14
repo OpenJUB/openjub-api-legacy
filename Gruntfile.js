@@ -17,11 +17,14 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     openjub: {
       dist: 'dist',
       src: 'lib',
-      docs: 'docs'
+      apidocs: 'api',
+      srcdocs: 'docs'
     },
+
     jshint: {
       options: {
         jshintrc: '.jshintrc',
@@ -34,12 +37,31 @@ module.exports = function (grunt) {
         '<%= openjub.src %>/{,*/}*.js'
       ]
     },
+
     apidoc: {
       myapp: {
         src: "<%= openjub.src %>/",
-        dest: "<%= openjub.docs %>/"
+        dest: "<%= openjub.apidocs %>/"
       }
     },
+
+    "jsdoc-ng" : {
+      myapp : {
+        src: ['<%= openjub.src %>', 'README.md' ],
+        dest: '<%= openjub.srcdocs %>',
+        options:  {
+          source: {
+              includePattern: ".+\\.js(doc)?$",
+              excludePattern: "(^|\\/|\\\\)_"
+          },
+          opts: {
+              recurse: true,
+              private: false
+          }
+        }
+      }
+    },
+
     clean: {
       dist: {
         files: [{
@@ -53,15 +75,19 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '<%= openjub.docs %>'
+            '<%= openjub.apidocs %>',
+            '<%= openjub.srcdocs %>'
           ]
         }]
       }
     }
   });
 
+  grunt.loadNpmTasks('grunt-jsdoc-ng');
+
   grunt.registerTask('docs', [
-    'apidoc'
+    'apidoc',
+    'jsdoc-ng'
   ]);
 
   grunt.registerTask('build', [

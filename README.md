@@ -1,6 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/openjub/openjub-api.png?label=ready&title=Ready)](https://waffle.io/openjub/openjub-api)
-![](public/images/logo_small.png)
-
 # OpenJUB API
 
 Server providing the actual OpenJUB API
@@ -43,7 +40,8 @@ Run and start server afterwards:
   $ grunt docs
 ```
 
-Navigate with your browser to: `http://localhost:6969/docs`
+Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost:6969/api`
+
 
 ## Contributors
 - Dominik Kundel <dominik.kundel@gmail.com>

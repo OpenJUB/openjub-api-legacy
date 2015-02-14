@@ -16,9 +16,6 @@ npm-debug.log
 node_modules
 bower_components
 
-openjub-api.sublime-workspace
-.DS_Store
-
 settings.json
 /docs
-tasks/exportWhoIsJack
+/api

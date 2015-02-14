@@ -1,7 +1,7 @@
 {
   "name": "openjub-api",
-  "version": "0.0.1",
-  "description": "Building great tools for Jacobs University Bremen",
+  "version": "0.0.2",
+  "description": "OpenJUB API",
   "main": "server.js",
   "scripts": {
     "test": ""
@@ -51,6 +51,7 @@
     "jshint-stylish": "~0.1.3",
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.1",
-    "grunt-apidoc": "~0.3.0"
+    "grunt-apidoc": "~0.3.0",
+    "grunt-jsdoc-ng": "0.0.3"
   }
 }
