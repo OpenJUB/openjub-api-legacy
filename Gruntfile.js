@@ -49,6 +49,7 @@ module.exports = function (grunt) {
       myapp : {
         src: ['<%= openjub.src %>', 'README.md' ],
         dest: '<%= openjub.srcdocs %>',
+        template: 'node_modules/jaguarjs-jsdoc',
         options:  {
           source: {
               includePattern: ".+\\.js(doc)?$",
@@ -56,7 +57,7 @@ module.exports = function (grunt) {
           },
           opts: {
               recurse: true,
-              private: false
+              private: true
           }
         }
       }
