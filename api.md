@@ -1,4 +1,4 @@
-API we want to have. 
+API we want to have.
 # Login / Logout
 /login/oncampus
 /login/signin
@@ -22,3 +22,6 @@ API we want to have.
 # Find multiple users
 /users/autocomplete/:query
 /users/search/:query
+
+# TODO
+Favorite system. 

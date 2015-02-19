@@ -12,10 +12,10 @@ try{
 }
 
 // Express Configuration
-require('./lib/config/express')(app);
+require('./lib/config/express').configure(app);
 
 // API Routes
-require('./lib/routes')(app);
+require('./lib/routes').route(app);
 
 var logo = settings.logo.join('\n');
 console.log(logo.cyan);
