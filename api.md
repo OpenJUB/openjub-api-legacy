@@ -2,15 +2,13 @@ API we want to have.
 # Login / Logout
 /login/oncampus
 /login/signin
-
-/logout
-
-# Auth status
-/auth/token
-/auth/checkcampus
+/login/logout
+/login/status
+/login/isoncampus
 
 # Get a single user.
 /user/me
+/user/me/isAGoat
 /user/me/image.jpg
 
 /user/name/:account
@@ -24,4 +22,4 @@ API we want to have.
 /users/search/:query
 
 # TODO
-Favorite system. 
+Favorite system.
