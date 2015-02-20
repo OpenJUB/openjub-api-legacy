@@ -39,14 +39,14 @@ module.exports = function (grunt) {
     },
 
     apidoc: {
-      myapp: {
+      openjub: {
         src: "<%= openjub.src %>/",
         dest: "<%= openjub.apidocs %>/"
       }
     },
 
     "jsdoc-ng" : {
-      myapp : {
+      openjub: {
         src: ['<%= openjub.src %>', 'README.md' ],
         dest: '<%= openjub.srcdocs %>',
         template: 'node_modules/jaguarjs-jsdoc',
@@ -92,6 +92,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'docs', 
     'jshint'
   ]);
 

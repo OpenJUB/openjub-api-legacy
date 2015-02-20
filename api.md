@@ -1,12 +1,3 @@
-API we want to have.
-# Login / Logout
-/login/signin
-
-/login/logout
-
-/login/status
-/login/isoncampus
-
 # Get a single user.
 /user/me
 /user/me/isAGoat
