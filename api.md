@@ -1,8 +1,9 @@
 API we want to have.
 # Login / Logout
-/login/oncampus
 /login/signin
+
 /login/logout
+
 /login/status
 /login/isoncampus
 

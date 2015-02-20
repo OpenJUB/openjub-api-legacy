@@ -2,6 +2,8 @@
 
 ## Coding style
 
+see .jshintrc
+
 ## Folder Structure
 
 `lib/`

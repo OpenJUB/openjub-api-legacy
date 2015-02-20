@@ -5,8 +5,7 @@
     "secret": "Something",
     "options": {
       "expiresInMinutes": 300
-    },
-    "acceptInBody": true
+    }
   },
   "database": "mongodb://localhost/openjub",
   "ldap": {
