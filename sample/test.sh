@@ -5,6 +5,9 @@ echo "If this does not crash OpenJUB, then you are in luck. "
 echo "The usage is: "
 echo "$1 user password"
 
+echo "LOGOUT"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/login/signout
+echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/login/status
 echo ""
