@@ -1,10 +1,4 @@
 #!/bin/bash
-
-echo "Testing OpenJUB real quick with curl..."
-echo "If this does not crash OpenJUB, then you are in luck. "
-echo "The usage is: "
-echo "$1 user password"
-
 echo "LOGOUT"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/signout
 echo ""
@@ -22,6 +16,12 @@ curl -b cookie.jar -c cookie.jar http://localhost:6969/user/name/twiesing
 echo ""
 echo "ID=30352,somefields"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/user/id/30352?fields=lastName,phone
+echo ""
+echo "SEARCH=Tom"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/search/Tom
+echo ""
+echo "QUERY=username:twiesing"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/query/username:twiesing
 echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
