@@ -14,6 +14,15 @@ echo ""
 echo "LOGIN"
 curl -c cookie.jar --data "username=$1&password=$2" http://localhost:6969/auth/signin
 echo ""
+echo "ME"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/user/me
+echo ""
+echo "NAME=TWIESING"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/user/name/twiesing
+echo ""
+echo "ID=30352,somefields"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/user/id/30352?fields=lastName,phone
+echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
