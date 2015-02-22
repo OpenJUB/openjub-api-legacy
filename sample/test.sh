@@ -6,21 +6,21 @@ echo "The usage is: "
 echo "$1 user password"
 
 echo "LOGOUT"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/login/signout
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/signout
 echo ""
 echo "STATUS"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/login/status
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
 echo "LOGIN"
-curl -c cookie.jar --data "username=$1&password=$2" http://localhost:6969/login/signin
+curl -c cookie.jar --data "username=$1&password=$2" http://localhost:6969/auth/signin
 echo ""
 echo "STATUS"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/login/status
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
 echo "LOGOUT"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/login/signout
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/signout
 echo ""
 echo "STATUS"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/login/status
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
 rm cookie.jar
