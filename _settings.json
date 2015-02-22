@@ -15,5 +15,5 @@
   },
   "imageBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/image.php?id=",
   "countryBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/embed_assets/flags/",
-  "imageApiUrl": "http://open.jacobs-cs.club/user/:account/image.jpg"
+  "imageApiUrl": "/user/image/:account/image.jpg"
 }
