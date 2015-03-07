@@ -12,10 +12,10 @@ try{
 }
 
 // Express Configuration
-require('./lib/config/express').configure(app);
+var rootPath = require('./lib/config/express').configure(app);
 
 // API Routes
-require('./lib/routes').route(app);
+require('./lib/routes').route(app, rootPath);
 
 //what a lovely picture
 console.log("\n\
