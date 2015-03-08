@@ -6,17 +6,18 @@
 <script>
 //we send a message to the opener window.
 if (window.opener) {
-  var query = window.location.query;
+  var query = window.location.search;
 
   //post the message if we have the token
   if (query.indexOf('?token') === 0) {
-    var token = window.location.query.substr('?token='.length);
+    var token = query.substr('?token='.length);
     var data = {
       'token': token
     };
     window.opener.postMessage(JSON.stringify(data), '*');
+    window.close(); 
   } else {
-    //else ignore it. 
+    //else ignore it.
     window.history.back();
   }
 }
