@@ -1,26 +1,32 @@
 #!/usr/bin/env node
 
-var program = require('commander');
 var mongoose = require('mongoose');
+var program = require('commander');
 var colors = require('colors');
-var ldapjs = require('ldapjs');
 var prompt = require('prompt');
 var inquirer = require('inquirer');
+
+// Set up ldap
+var ldapjs = require('ldapjs');
 var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
+
+// load a bunch of local packages
 var modelImport = require('../lib/models');
 var pkg = require('../package');
 var settings = require('../settings');
 
+// command line arguments to parse
 program
   .version(pkg.version)
   .option('-d, --drop', 'Delete Old Records')
+  .option('-v, --verbose', 'Be verbose and say what you are doing. ')
   .option('-u, --username [username]', 'Username')
   .option('-p, --password [password]', 'Password')
   .parse(process.argv);
 
 var Models; // holds all models available
 
-function setup (callback) {
+function setup(callback) {
   console.log('INFO'.cyan + ' Creating connection to database');
 
   mongoose.connect(settings.database)
@@ -76,6 +82,7 @@ function setup (callback) {
 
     ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
       if (!(err === null)) {
+        console.log(err); 
         console.log('ERR'.red + " Couldn't login with the details provided");
         process.exit(-1);
       }
