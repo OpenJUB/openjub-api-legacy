@@ -10,7 +10,6 @@ lib-cov
 pids
 logs
 results
-data
 sample/cookie.jar
 
 npm-debug.log

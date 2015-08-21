@@ -10,7 +10,7 @@ var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
 var modelImport = require('../lib/models');
 var pkg = require('../package');
 var settings = require('../settings');
-var mapping = require('./phone-room-mapping.json');
+var mapping = require('../room/data/mapping');
 
 mongoose.connect(settings.database);
 Models = modelImport(mongoose);
