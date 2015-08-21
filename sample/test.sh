@@ -5,6 +5,9 @@ echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
+echo "ONCAMPUS"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/isoncampus
+echo ""
 echo "LOGIN"
 curl -c cookie.jar --data "username=$1&password=$2" http://localhost:6969/auth/signin
 echo ""
