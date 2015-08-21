@@ -1,4 +1,4 @@
-# OpenJUB API
+# OpenJUB API 1.1
 
 Server providing the actual OpenJUB API
 
