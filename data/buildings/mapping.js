@@ -18,5 +18,8 @@ module.exports = (new Array()).concat(
   buildings.college.nordmetall, 
   
   // Other
+  buildings.other.rlh, 
+  buildings.other.south_hall, 
+  buildings.other.campus_center, 
   buildings.other.misc
 ); 
