@@ -45,7 +45,9 @@ Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost
 ## Changelog
 ### Version 0.1.1
 * changes to the sync script
-  * has been taught the ```--verbose``` option to say what it does. 
+  * has been taught the ```--verbose``` option to say what it does
+  * better syncronisation behaviour
+  * can now optionally read password from the configuration file
 * slight change to how requests with multiple results are handled
   * now return a "count" parameter that counts the number of results
   * the ```prev``` and ```next``` parameters return ```false``` whenever the resulting url does not make sense
