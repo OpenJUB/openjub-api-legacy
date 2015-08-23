@@ -38,6 +38,7 @@
     "morgan": "^1.5.1",
     "prompt": "~0.2.14",
     "request": "^2.53.0",
+    "taffydb": "^2.7.2",
     "underscore": "^1.8.1",
     "winston": "^1.0.1"
   },
