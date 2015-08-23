@@ -62,6 +62,11 @@ Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost
 
 ### Version 0.1
 * complete code cleanup
+* documentation
+
+### Version 0.0
+* actually not really versioned
+* initial release
 
 ## Contributors
 - Tom Wiesing <tom.wiesing@gmail.com>

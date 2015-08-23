@@ -19,7 +19,6 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     openjub: {
-      dist: 'dist',
       src: 'lib',
       apidocs: 'api',
       srcdocs: 'docs'
@@ -64,14 +63,6 @@ module.exports = function (grunt) {
     },
 
     clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= openjub.dist %>'
-          ]
-        }]
-      },
       docs: {
         files: [{
           dot: true,
@@ -92,7 +83,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'docs', 
+    'docs',
     'jshint'
   ]);
 

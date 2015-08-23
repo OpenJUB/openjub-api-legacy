@@ -1,6 +1,4 @@
 'use strict';
 
-// THIS SCRIPT ONLY EXISTS FOR BACKWARD COMPATIBILITY REASONS
-// IT MAY OR MAY NOT BE REMOVED SOON
-
-require("./lib/api/index.js")
+// JUST CALL THE API HANDLER
+require('./lib/api/index.js');
