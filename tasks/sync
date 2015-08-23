@@ -11,9 +11,9 @@ var ldapjs = require('ldapjs');
 var ldap = ldapjs.createClient({url:'ldap://jacobs.jacobs-university.de'});
 
 // load a bunch of local packages
-var modelImport = require('../lib/models');
+var modelImport = require('../lib/db/models');
 var pkg = require('../package');
-var settings = require('../settings');
+var settings = require('../lib/settings');
 
 // command line arguments to parse
 program
@@ -82,7 +82,7 @@ function setup(callback) {
 
     ldap.bind(user+'@'+settings.ldap.host, password, function(err) {
       if (!(err === null)) {
-        console.log(err); 
+        console.log(err);
         console.log('ERR'.red + " Couldn't login with the details provided");
         process.exit(-1);
       }
