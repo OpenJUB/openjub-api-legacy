@@ -1,4 +1,4 @@
-# OpenJUB API 0.1.1
+# OpenJUB API 0.2.0
 
 Server providing the actual OpenJUB API
 
@@ -43,7 +43,7 @@ Run and start server afterwards:
 Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost:6969/api`
 
 ## Changelog
-### Version 0.1.1
+### Version 0.2.0
 * changes to the sync script
   * has been taught the ```--verbose``` option to say what it does
   * better syncronisation behaviour
