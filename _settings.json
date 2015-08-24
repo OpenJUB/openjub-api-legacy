@@ -10,8 +10,9 @@
   "database": "mongodb://localhost/openjub",
   "ldap": {
     "host": "jacobs.jacobs-university.de",
-    "port": 389,
-    "prefix": "JACOBS\\\\"
+    "prefix": "JACOBS\\\\", 
+    "username": null, 
+    "password": null
   },
   "imageBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/image.php?id=",
   "countryBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/embed_assets/flags/",
