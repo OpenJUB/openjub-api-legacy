@@ -23,8 +23,8 @@ echo ""
 echo "SEARCH=Tom"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/search/Tom
 echo ""
-echo "QUERY=username:twiesing"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/query/username:twiesing
+echo "QUERY=username:dkundel"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/query/username:dkundel
 echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
