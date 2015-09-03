@@ -19,7 +19,7 @@ Server providing the actual OpenJUB API
   $ npm install
   $ bower install
   $ cp _settings.json settings.json # change config if necessary
-  $ ./lib/sync # updates data from LDAP and re-parses old
+  $ ./lib/sync -s # updates data from LDAP and re-parses old entries
 ```
 
 ## Run Server
@@ -44,22 +44,26 @@ Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost
 ## Changelog
 ### Version 0.2.0
 * changes to the sync script
+  * moved from 'tasks/sync' to 'lib/sync'
+  * now gives a lot more warnings when stuff in the database is not the way its supposed to be
+  * now optionally reads password from config file
   * better syncronisation behaviour
-    * re-parse old entries and mark them as inactive. 
-  * can now optionally read password from the configuration file
+    * can now re-parse old entries and mark them as inactive. 
+    * can now sync with ldap or with file
+    * can dump the entire database to a file. 
 * slight change to how requests with multiple results are handled
   * now returns a "count" parameter that counts the number of results
   * the ```prev``` and ```next``` parameters return ```false``` whenever the resulting url does not make sense
-* rename of main script
-  * now called ```index.js``` (instead of ```server.js```)
+* internal changes to how the syntax for requests is parsed. 
 * cleanup of phone room mapping
   * now internally stored on a per-building basis
-  * uses data from LDAP if available. 
+  * uses data from LDAP if available
+  * automatically renewed when needed
+* rename of main script
+  * now called ```index.js``` (instead of ```server.js```)
 * more code cleanup:
   * performance improvements by querying mongodb with several queries at once
   * code seperation between REST parsing and handling of queries
-  * moving code files around
-
 ### Version 0.1
 * complete code cleanup
 * documentation
