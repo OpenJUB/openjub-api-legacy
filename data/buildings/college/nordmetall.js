@@ -31,6 +31,7 @@ module.exports = [
   { room: 'NA-231', phone: '6045' },
   { room: 'NA-233', phone: '6046' },
   { room: 'NA-235', phone: '6047' },
+
   { room: 'NA-301', phone: '6048' },
   { room: 'NA-303', phone: '6049' },
   { room: 'NA-305', phone: '6050' },
@@ -49,6 +50,7 @@ module.exports = [
   { room: 'NA-331', phone: '6063' },
   { room: 'NA-333', phone: '6064' },
   { room: 'NA-335', phone: '6065' },
+
   { room: 'NA-401', phone: '6066' },
   { room: 'NA-403', phone: '6067' },
   { room: 'NA-405', phone: '6068' },
@@ -67,6 +69,7 @@ module.exports = [
   { room: 'NA-431', phone: '6081' },
   { room: 'NA-433', phone: '6082' },
   { room: 'NA-435', phone: '6083' },
+
   { room: 'NA-507', phone: '6084' },
   { room: 'NA-509', phone: '6085' },
   { room: 'NA-511', phone: '6086' },
@@ -82,6 +85,7 @@ module.exports = [
   { room: 'NA-531', phone: '6096' },
   { room: 'NA-533', phone: '6097' },
   { room: 'NA-535', phone: '6098' },
+
   { room: 'NB-102', phone: '6099' },
   { room: 'NB-103', phone: '6100' },
   { room: 'NB-106', phone: '6101' },
@@ -125,6 +129,7 @@ module.exports = [
   { room: 'NB-193', phone: '6139' },
   { room: 'NB-196', phone: '6140' },
   { room: 'NB-197', phone: '6141' },
+
   { room: 'NB-202', phone: '6142' },
   { room: 'NB-203', phone: '6143' },
   { room: 'NB-206', phone: '6144' },
@@ -151,11 +156,14 @@ module.exports = [
   { room: 'NB-263', phone: '6169' },
   { room: 'NB-275', phone: '6175' },
   { room: 'NB-292', phone: '6183' },
+
   { room: 'NB-355', phone: '6211' },
   { room: 'NB-360', phone: '6212' },
   { room: 'NB-371', phone: '6218' },
   { room: 'NB-380', phone: '6222' },
+
   { room: 'NB-460', phone: '6252' },
   { room: 'NB-466', phone: '6255' },
+
   { room: 'NC-422', phone: '6295' }
-]; 
+];
