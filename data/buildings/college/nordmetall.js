@@ -3,7 +3,6 @@ module.exports = [
   /* Misc */
   { room: 'Nordmetall (Private Residence)', phone: '6000' },
   { room: 'Nordmetall (Emergency)', phone: '6001' },
-
   { room: 'Nordmetall (Catering)', phone: '6003' },
   { room: 'Nordmetall (Fax)', phone: '6006' },
 
