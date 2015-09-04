@@ -54,7 +54,9 @@ Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost
 * slight change to how requests with multiple results are handled
   * now returns a "count" parameter that counts the number of results
   * the ```prev``` and ```next``` parameters return ```false``` whenever the resulting url does not make sense
-* internal changes to how the syntax for requests is parsed. 
+* rewrote query syntax Parser
+  * more flexible
+  * supports auto-completion now
 * cleanup of phone room mapping
   * now internally stored on a per-building basis
   * uses data from LDAP if available
