@@ -25,7 +25,7 @@ var all = (new Array()).concat(
 ).map(function(e, i){
   return {
     room: buildings.cleanRoom(e.room),
-    phone: buildings.cleanPhone(e.room)
+    phone: buildings.cleanPhone(e.phone)
   }
 });
 
@@ -52,6 +52,6 @@ module.exports.findRoom = function(phone){
       return all[i].room;
     }
   }
-
+  
   return null;
 }

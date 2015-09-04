@@ -5,10 +5,10 @@ module.exports.other = require("./other");
 // TODO: Clean the room.
 module.exports.cleanRoom = function(room){
   var sRoom = room || '';
-  return sRoom.trim();
+  return sRoom.toString().trim();
 };
 
 module.exports.cleanPhone = function(phone){
   var sPhone = phone || '';
-  return sPhone.trim();
+  return sPhone.toString().trim();
 }

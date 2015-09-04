@@ -1,31 +1,18 @@
 module.exports = [
-  { room: 'CATERING-MERCATOR', phone: '5003' },
-  { room: 'PRIVATE RESIDENCE', phone: '5300' },
-  { room: 'MERCATOR EMERGENCY', phone: '5301' },
-  { room: 'MERCATOR CM-OFFICE', phone: '5302' },
-  { room: 'KUECHE MERCATOR', phone: '5303' },
-  { room: 'MERCATOR CONFERENCE', phone: '5304' },
-  { room: 'MERCATOR COMMONROOM', phone: '5305' },
-  { room: 'CM MERCATOR FAX', phone: '5306' },
-  { room: 'MD-104', phone: '5310' },
-  { room: 'MD-201', phone: '5311' },
-  { room: 'MD-203', phone: '5312' },
-  { room: 'MD-205', phone: '5313' },
-  { room: 'MD-207', phone: '5314' },
-  { room: 'MD-209', phone: '5315' },
-  { room: 'MD-211', phone: '5316' },
-  { room: 'MD-213', phone: '5317' },
-  { room: 'MD-215', phone: '5318' },
-  { room: 'MD-217', phone: '5319' },
-  { room: 'MD-301', phone: '5320' },
-  { room: 'MD-303', phone: '5321' },
-  { room: 'MD-305', phone: '5322' },
-  { room: 'MD-307', phone: '5323' },
-  { room: 'MD-309', phone: '5324' },
-  { room: 'MD-311', phone: '5325' },
-  { room: 'MD-313', phone: '5326' },
-  { room: 'MD-315', phone: '5327' },
-  { room: 'MD-317', phone: '5328' },
+  /* Misc */
+  { room: 'Mercator (Private Residence)', phone: '5300' },
+  { room: 'Mercator (Emergency)', phone: '5301' },
+  { room: 'Mercator (Catering)', phone: '5003' },
+  { room: 'Mercator (Fax)', phone: '5306' },
+
+  { room: 'Mercator, Kitchen', phone: '5303' },
+  { room: 'Mercator, College Office', phone: '5302' },
+
+  { room: 'Mercator, Conference Room', phone: '5304' },
+  { room: 'Mercator, Common Room', phone: '5305' },
+
+
+  /* MA-1 */
   { room: 'MA-101', phone: '5329' },
   { room: 'MA-102', phone: '5330' },
   { room: 'MA-103', phone: '5331' },
@@ -42,6 +29,11 @@ module.exports = [
   { room: 'MA-128', phone: '5342' },
   { room: 'MA-129', phone: '5343' },
   { room: 'MA-132', phone: '5344' },
+  { room: 'MA-133', phone: '5345' },
+  { room: 'MA-136', phone: '5346' },
+  { room: 'MA-137', phone: '5347' },
+  /* MA-2 */
+  { room: 'MA-202', phone: '5348' },
   { room: 'MA-203', phone: '5349' },
   { room: 'MA-208', phone: '5350' },
   { room: 'MA-209', phone: '5351' },
@@ -61,6 +53,7 @@ module.exports = [
   { room: 'MA-237', phone: '5365' },
   { room: 'MA-240', phone: '5366' },
   { room: 'MA-241', phone: '5367' },
+  /* MA-3 */
   { room: 'MA-302', phone: '5368' },
   { room: 'MA-303', phone: '5369' },
   { room: 'MA-308', phone: '5370' },
@@ -81,6 +74,8 @@ module.exports = [
   { room: 'MA-337', phone: '5385' },
   { room: 'MA-340', phone: '5386' },
   { room: 'MA-341', phone: '5387' },
+
+  /* MB-1 */
   { room: 'MB-101', phone: '5388' },
   { room: 'MB-102', phone: '5389' },
   { room: 'MB-103', phone: '5390' },
@@ -100,6 +95,7 @@ module.exports = [
   { room: 'MB-133', phone: '5404' },
   { room: 'MB-136', phone: '5405' },
   { room: 'MB-137', phone: '5406' },
+  /* MB-2 */
   { room: 'MB-202', phone: '5407' },
   { room: 'MB-203', phone: '5408' },
   { room: 'MB-208', phone: '5409' },
@@ -120,6 +116,7 @@ module.exports = [
   { room: 'MB-237', phone: '5424' },
   { room: 'MB-240', phone: '5425' },
   { room: 'MB-241', phone: '5426' },
+  /* MB-3 */
   { room: 'MB-302', phone: '5427' },
   { room: 'MB-303', phone: '5428' },
   { room: 'MB-308', phone: '5429' },
@@ -140,6 +137,8 @@ module.exports = [
   { room: 'MB-337', phone: '5444' },
   { room: 'MB-340', phone: '5445' },
   { room: 'MB-341', phone: '5446' },
+
+  /* MC-1 */
   { room: 'MC-101', phone: '5447' },
   { room: 'MC-102', phone: '5448' },
   { room: 'MC-103', phone: '5449' },
@@ -159,6 +158,7 @@ module.exports = [
   { room: 'MC-133', phone: '5463' },
   { room: 'MC-136', phone: '5464' },
   { room: 'MC-137', phone: '5465' },
+  /* MC-2 */
   { room: 'MC-202', phone: '5466' },
   { room: 'MC-203', phone: '5467' },
   { room: 'MC-208', phone: '5468' },
@@ -179,6 +179,7 @@ module.exports = [
   { room: 'MC-237', phone: '5483' },
   { room: 'MC-240', phone: '5484' },
   { room: 'MC-241', phone: '5485' },
+  /* MC-3 */
   { room: 'MC-302', phone: '5486' },
   { room: 'MC-303', phone: '5487' },
   { room: 'MC-308', phone: '5488' },
@@ -198,5 +199,28 @@ module.exports = [
   { room: 'MC-336', phone: '5502' },
   { room: 'MC-337', phone: '5503' },
   { room: 'MC-340', phone: '5504' },
-  { room: 'MC-341', phone: '5505' }
+  { room: 'MC-341', phone: '5505' },
+
+  /* MD-1 */
+  { room: 'MD-104', phone: '5310' },
+  /* MD-2 */
+  { room: 'MD-201', phone: '5311' },
+  { room: 'MD-203', phone: '5312' },
+  { room: 'MD-205', phone: '5313' },
+  { room: 'MD-207', phone: '5314' },
+  { room: 'MD-209', phone: '5315' },
+  { room: 'MD-211', phone: '5316' },
+  { room: 'MD-213', phone: '5317' },
+  { room: 'MD-215', phone: '5318' },
+  { room: 'MD-217', phone: '5319' },
+  /* MD-3 */
+  { room: 'MD-301', phone: '5320' },
+  { room: 'MD-303', phone: '5321' },
+  { room: 'MD-305', phone: '5322' },
+  { room: 'MD-307', phone: '5323' },
+  { room: 'MD-309', phone: '5324' },
+  { room: 'MD-311', phone: '5325' },
+  { room: 'MD-313', phone: '5326' },
+  { room: 'MD-315', phone: '5327' },
+  { room: 'MD-317', phone: '5328' }
 ];
