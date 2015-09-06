@@ -8,7 +8,7 @@ Server providing the actual OpenJUB API
 
 ## Install
 
-1. Install MongoDB and Node.JS
+1. Install MongoDB and Node.JS 
 
 2. Run:
 
