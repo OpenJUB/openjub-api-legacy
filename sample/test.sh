@@ -14,8 +14,8 @@ echo ""
 echo "ME"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/user/me
 echo ""
-echo "NAME=TWIESING"
-curl -b cookie.jar -c cookie.jar http://localhost:6969/user/name/twiesing
+echo "NAME=LKUBOSCHEK"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/user/name/lkuboschek
 echo ""
 echo "ID=30352,somefields"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/user/id/30352?fields=lastName,phone
