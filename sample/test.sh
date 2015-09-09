@@ -26,6 +26,9 @@ echo ""
 echo "QUERY=username:dkundel"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/query/username:dkundel
 echo ""
+echo "QUERY=college:nordmetall,krupp"
+curl -b cookie.jar -c cookie.jar http://localhost:6969/query/college:nordmetall,krupp
+echo ""
 echo "STATUS"
 curl -b cookie.jar -c cookie.jar http://localhost:6969/auth/status
 echo ""
