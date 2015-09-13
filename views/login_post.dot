@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>OpenJUB - Authentication</title>
+    
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/lib/css/login.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <form class="form-signin">
+        <h2 class="form-signin-heading">
+          <img class="form-logo" src="/images/logo_small.png" alt="OpenJUB" title="OpenJUB">
+        </h2>
+        
+        <div class="alert alert-success">
+          You have authenticated successfully. You should be redirected immediatly ...
+        </div>
+      </form>
+    </div> <!-- /container -->
+    <script src="/lib/js/login_post.js"></script>
+    <script type="text/javascript">
+      var it = {{= JSON.stringify({'token': it.token, 'id': it.id}) }}; 
+      next(it.token, it.id); 
+    </script>
+  </body>
+</html>

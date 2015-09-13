@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>OpenJUB - Authentication</title>
+    
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/lib/css/login.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <form class="form-signin" method="POST" action="/view/login">
+        <h2 class="form-signin-heading">
+          <img class="form-logo" src="/images/logo_small.png" alt="OpenJUB" title="OpenJUB">
+        </h2>
+        
+        <div class="well">
+          You are already logged into OpenJUB. 
+        </div>
+        
+        <button class="btn btn-lg btn-default btn-block" type="submit" name="action" value="continue">
+          Continue as <br/>
+          <img src="{{= it.user.picture + it.suffix }}" class="image_inline"> {{=it.user.fullName}}
+        </button>
+        
+        <div class="strike">
+            <span>or</span>
+        </div>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="clear">
+          Sign into a different account
+        </button>
+        
+        <br />
+        
+        <input type="hidden" name="id" value="{{=it.id}}">
+        <input type="hidden" name="redirect_url" value="{{=it.redirect_url}}">
+        
+        <div class="form-cookies">
+          By clicking any of the buttons above you allow OpenJUB to store cookies on your computer so we can persist 
+          your login information. <a href="/view/cookies" target="_blank" alt="More information" title="More information">More information</a>. 
+        </div>
+      </form>
+
+    </div> <!-- /container -->
+  </body>
+</html>
