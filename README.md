@@ -1,4 +1,4 @@
-# OpenJUB API 0.2.0
+# OpenJUB API 0.2.1
 
 Server providing the actual OpenJUB API
 
@@ -42,6 +42,10 @@ Run and start server afterwards:
 Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost:6969/api`
 
 ## Changelog
+### Version 0.2.1
+* update the sign-in dialog
+* redo session management and authentication
+* added some indexes for performance
 ### Version 0.2.0
 * changes to the sync script
   * moved from 'tasks/sync' to 'lib/sync'
