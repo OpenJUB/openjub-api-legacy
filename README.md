@@ -46,6 +46,7 @@ Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost
 * update the sign-in dialog
 * redo session management and authentication
 * added some indexes for performance
+* added an informational text about cookie usage. 
 ### Version 0.2.0
 * changes to the sync script
   * moved from 'tasks/sync' to 'lib/sync'

@@ -36,7 +36,7 @@
         
         <div class="form-cookies">
           By clicking the button below you allow OpenJUB to store cookies on your computer so we can persist 
-          your login information. <a href="/view/cookies" target="_blank" alt="More information" title="More information">More information</a>. 
+          your login information. We will not use these cookies for any other purpose and delete them once you sign out. 
         </div>
         
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="login">Login via OpenJUB</button>
