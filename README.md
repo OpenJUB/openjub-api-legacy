@@ -1,4 +1,4 @@
-# OpenJUB API 0.2.1
+# OpenJUB API 0.2.2
 
 Server providing the actual OpenJUB API
 
@@ -8,7 +8,7 @@ Server providing the actual OpenJUB API
 
 ## Install
 
-1. Install MongoDB and Node.JS 
+1. Install MongoDB and Node.JS
 
 2. Run:
 
@@ -42,20 +42,22 @@ Run and start server afterwards:
 Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost:6969/api`
 
 ## Changelog
+### Version 0.2.2
+* added the ```isResearcher``` and ```isAdmin``` fields
 ### Version 0.2.1
 * update the sign-in dialog
 * redo session management and authentication
 * added some indexes for performance
-* added an informational text about cookie usage. 
+* added an informational text about cookie usage.
 ### Version 0.2.0
 * changes to the sync script
   * moved from 'tasks/sync' to 'lib/sync'
   * now gives a lot more warnings when stuff in the database is not the way its supposed to be
   * now optionally reads password from config file
   * better syncronisation behaviour
-    * can now re-parse old entries and mark them as inactive. 
+    * can now re-parse old entries and mark them as inactive.
     * can now sync with ldap or with file
-    * can dump the entire database to a file. 
+    * can dump the entire database to a file.
 * slight change to how requests with multiple results are handled
   * now returns a "count" parameter that counts the number of results
   * the ```prev``` and ```next``` parameters return ```false``` whenever the resulting url does not make sense

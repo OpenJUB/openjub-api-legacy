@@ -1,6 +1,6 @@
 {
   "name": "openjub-api",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "OpenJUB API",
   "main": "server.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "method-override": "^2.3.1",
     "mongoose": "^4.1.5",
     "morgan": "^1.5.1",
-    "prompt": "~0.2.14",
+    "prompt": "~0.2.24",
     "request": "^2.53.0",
     "taffydb": "^2.7.2",
     "underscore": "^1.8.1",
