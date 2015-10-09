@@ -42,6 +42,8 @@ Run and start server afterwards:
 Navigate with your browser to: `http://localhost:6969/docs` or `http://localhost:6969/api`
 
 ## Changelog
+### Version 0.2.3
+* hide phone number if it is an off-campus number
 ### Version 0.2.2
 * added the ```isResearcher``` and ```isAdmin``` fields
 ### Version 0.2.1
