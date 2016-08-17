@@ -10,11 +10,11 @@
   "database": "mongodb://localhost/openjub",
   "ldap": {
     "host": "jacobs.jacobs-university.de",
-    "prefix": "JACOBS\\\\", 
-    "username": null, 
+    "prefix": "JACOBS\\\\",
+    "username": null,
     "password": null
   },
-  "imageBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/image.php?id=",
+  "imageBaseUrl": "http://ircitweb.irc-it.jacobs-university.de/cnpics_128_intranet/:eid.jpg",
   "countryBaseUrl": "http://swebtst01.public.jacobs-university.de/jPeople/embed_assets/flags/",
   "imageApiUrl": "/user/image/:account/image.jpg"
 }
